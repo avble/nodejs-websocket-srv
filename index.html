@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Websocket Echo</title>
+    </head>
+    <body>
+        <h1>WebSocket Echo</h1>
+        <form action="" onsubmit="sendMessage(event)">
+            <input type="text" id="messageText" autocomplete="off" />
+            <button>Send</button>
+        </form>
+        <textarea rows="9" cols="70" id="echoText"> 
+        </textarea>
+
+        <script>
+            var ws = new WebSocket('ws://127.0.0.1:3000');
+            ws.onmessage = function(event) {
+                var textArea = document.getElementById('echoText')
+                textArea.value = event.data + "\n" + textArea.value
+            };
+            function sendMessage(event) {
+                var input = document.getElementById("messageText")
+                ws.send(input.value)
+                input.value = ''
+                event.preventDefault()
+            }
+        </script>
+    </body>
+</html>
